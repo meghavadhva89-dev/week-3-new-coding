@@ -13,6 +13,9 @@ def fib(n):
 	else:
 		return fib(n - 1) + fib(n - 2)
 
+# Alias for autograder compatibility
+fibonacci = fib
+
 # Test Exercise 1
 print("Fibonacci Test:")
 for i in range(11):
@@ -67,7 +70,10 @@ def task_1():
 	required_order = ['date_in', 'last_name', 'first_name', 'gender', 'age', 'profession', 'disease', 'children']
 	return required_order
 
-def task_2(df_bellevue):
+def task_2(df_bellevue=None):
+	if df_bellevue is None:
+		url = 'https://github.com/melaniewalsh/Intro-Cultural-Analytics/raw/master/book/data/bellevue_almshouse_modified.csv'
+		df_bellevue = pd.read_csv(url)
 	print("Columns in dataset:", df_bellevue.columns.tolist())
 	if 'date_in' in df_bellevue.columns:
 		df_bellevue['year'] = pd.to_datetime(df_bellevue['date_in'], errors='coerce').dt.year
@@ -77,7 +83,10 @@ def task_2(df_bellevue):
 		print("No suitable column for year found.")
 		return None
 
-def task_3(df_bellevue):
+def task_3(df_bellevue=None):
+	if df_bellevue is None:
+		url = 'https://github.com/melaniewalsh/Intro-Cultural-Analytics/raw/master/book/data/bellevue_almshouse_modified.csv'
+		df_bellevue = pd.read_csv(url)
 	df_bellevue['gender'] = df_bellevue['gender'].str.strip().str.lower()
 	df_bellevue.loc[~df_bellevue['gender'].isin(['m', 'f']), 'gender'] = pd.NA
 	df_bellevue['age'] = pd.to_numeric(df_bellevue['age'], errors='coerce')
@@ -86,7 +95,10 @@ def task_3(df_bellevue):
 	avg_age_by_gender = df_bellevue.groupby('gender')['age'].mean()
 	return avg_age_by_gender
 
-def task_4(df_bellevue):
+def task_4(df_bellevue=None):
+	if df_bellevue is None:
+		url = 'https://github.com/melaniewalsh/Intro-Cultural-Analytics/raw/master/book/data/bellevue_almshouse_modified.csv'
+		df_bellevue = pd.read_csv(url)
 	df_bellevue['profession'] = df_bellevue['profession'].str.strip().str.lower()
 	if df_bellevue['profession'].isna().sum() > 0:
 		print("Some profession values are missing or invalid.")
